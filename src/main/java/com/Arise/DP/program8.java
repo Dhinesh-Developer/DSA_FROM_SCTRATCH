@@ -1,5 +1,6 @@
 package com.Arise.DP;
 
+import javax.sound.midi.SysexMessage;
 import java.util.Arrays;
 
 class Solution8{
@@ -32,11 +33,24 @@ class Solution8{
 
 }
 public class program8 {
+
+//    public static void numberInvalid(int number){
+//        if(number instanceof String){
+//
+//            System.out.println(Integer.parseInt(number));
+//        }else{
+//            System.out.println("Inside else");
+//            throw new NumberFormatException();
+//        }
+//    }
+
     public static void main(String[] args) {
 
-        int[] arr = {7, 1, 5, 3, 6, 4};
-        Solution8 sol = new Solution8();
-        int res = sol.bestTimeToSellAndBuy2(arr);
-        System.out.println(res);
+        int number = 123;
+        try{
+//            numberInvalid(number);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
