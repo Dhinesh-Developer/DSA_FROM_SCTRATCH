@@ -1,5 +1,7 @@
 package com.Arise._String;
 
+import javax.sound.midi.SysexMessage;
+import java.net.Inet4Address;
 import java.util.*;
 
 public class StringProgram {
@@ -129,8 +131,155 @@ public class StringProgram {
         System.out.println(Arrays.equals(ar1,ar2));
     }
 
+    private static void program11(){
+        String s = "abcabcbb";
+       Set<Character> set = new HashSet<>();
+       int maxCount = 0,i=0,j=0;
+       int n = s.length();
+       while(i <n && j<n){
+           if(!set.contains(s.charAt(j))){
+               set.add(s.charAt(j));
+               j++;
+           }else{
+               set.remove(s.charAt(i));
+               i++;
+           }
+       }
+        System.out.println(maxCount);
+    }
+
+    private static void program12(){
+        String s = "abbaca";
+        Stack<Character> st = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            if(!st.isEmpty() && st.peek()==s.charAt(i)){
+                st.pop();
+            }else{
+                st.push(s.charAt(i));
+            }
+        }
+        for(Character x : st){
+            sb.append(x);
+        }
+        System.out.println(sb);
+    }
+
+    private static void program13(){
+        String str1 = "ade";
+        String str2 = "abcdefgh";
+        int i=0,j=0;
+        while(i<str1.length() && j<str2.length()){
+            if(str1.charAt(i) == str2.charAt(j)){
+                i++;
+            }
+            if(str1.length()==i) System.out.println(true);
+            j++;
+        }
+       // System.out.println(false);
+    }
+
+    private static void program14(){
+        String s = "teee";
+        StringBuilder res = new StringBuilder();
+        Map<Character,Integer> map = new HashMap<>();
+        for(char c : s.toCharArray()){
+            map.put(c,map.getOrDefault(c,0)+1);
+        }
+
+        List<Character> li = new ArrayList<>(map.keySet());
+        li.sort((a,b) -> {
+            int cmp = map.get(b) - map.get(a);
+            return (cmp!=0) ? cmp:Character.compare(a,b);
+        });
+
+        for(char c : li){
+            for(int i=0;i<map.get(c);i++){
+                res.append(c);
+            }
+        }
+        System.out.println(res);
+    }
+
+    private static void program15(){
+        String s = "{()}[]";
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i< s.length();i++){
+            if(s.charAt(i) =='{' || s.charAt(i) =='[' || s.charAt(i) =='('){
+                st.push(s.charAt(i));
+            }else if(!st.isEmpty() && (s.charAt(i) ==']' && st.peek()=='[')
+            || (s.charAt(i) =='}' && st.peek()=='{') ||
+                    (s.charAt(i) ==')' && st.peek()=='(')){
+                st.pop();
+            }else{
+                st.push(s.charAt(i));
+            }
+        }
+        System.out.println(st.isEmpty());
+    }
+
+    private static void program16(){
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+
+        String s = "XI";
+        int res = 0;
+        for(int i=0;i<s.length()-1;i++){
+            if(map.get(s.charAt(i)) >= map.get(s.charAt(i+1))){
+                res = res + map.get(s.charAt(i));
+            }else{
+                res = res - map.get(s.charAt(i));
+            }
+        }
+        res = res + map.get(s.charAt(s.length()-1));
+        System.out.println(res);
+    }
+
+    private static void program17(){
+        String s = "java";
+        Map<Character,Integer> map = new LinkedHashMap<>();
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+
+        for(Map.Entry<Character,Integer> x : map.entrySet()){
+            if(x.getValue()==1){
+                System.out.println(x.getKey());
+                break;
+            }
+        }
+    }
+
+    private static void program18(){
+        String[] s = {"eat","tea","tan","ate","net","bat"};
+        List<List<String>> res = new ArrayList<>();
+        Map<String,List<String>> map = new HashMap<>();
+        for(String x : s){
+            char[] ar = x.toCharArray();
+            Arrays.sort(ar);
+            String key = new String(ar);
+            if(map.containsKey(key)){
+                map.get(key).add(x);
+            }else{
+                List<String> li = new ArrayList<>();
+                li.add(x);
+                map.put(key,li);
+            }
+        }
+        res.addAll(map.values());
+        System.out.println(res);
+    }
+
     public static void main(String[] args) {
 
+        // string program
         program1(); // count occurences of each character in the String.
         program2(); // palindrome of not
         program3(); // reverse a String.
@@ -141,5 +290,16 @@ public class StringProgram {
         program8(); // find first non repeating character in the String.
         program9(); // longest common prefix amongest on Array of String.
         program10(); // valid anagram
+
+
+        program11(); // longest substring without repeating character.
+        program12(); // remove all adjacent duplicatess from a String.
+        program13(); // check if the str1 is a substring of str2.
+        program14(); // sort based on the frequency
+        program15(); // valid paranthesis
+        program16(); // Roman to integer.
+        program17(); // First unique character in the String.
+        program18(); // Group anagram together.
+
     }
 }
